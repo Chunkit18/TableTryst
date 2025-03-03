@@ -88,11 +88,11 @@
             </button>
             <div class="collapse navbar-collapse" id="myNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a href="Homepage.html" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="Homepage.php" class="nav-link">Home</a></li>
                     <li class="nav-item"><a href="#" class="nav-link">Categories</a></li>
                     <li class="nav-item"><a href="#" class="nav-link">Meals</a></li>
                     <li class="nav-item"><a href="Cart.html" class="nav-link">Cart</a></li>
-                    <li class="nav-item"><a href="SelectRestaurant.html" class="nav-link">Booking</a></li>
+                    <li class="nav-item"><a href="SelectRestaurant.php" class="nav-link">Booking</a></li>
                 </ul>
             </div>
         </div>
