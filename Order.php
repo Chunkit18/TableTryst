@@ -300,7 +300,6 @@ setInterval(fetchMenu, 5000);
 // Fetch the menu when the page loads
 fetchMenu();
 
-
 </script>
 </body>
 </html>
