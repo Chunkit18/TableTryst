@@ -18,7 +18,7 @@
         <nav class="navbar navbar-expand-lg main-navbar bg-color main-navbar-color"
         id="main-navbar">
         <div class="container">
-            <a class="navbar-brand" href="#">Food Ordering</a>
+            <a class="navbar-brand" href="#">TableTryst</a>
             <div class="order-lg-last btn-group">
                 <i class="fas fa-shopping-bag fa-2x"></i>
             </div>
@@ -38,7 +38,7 @@
                     <a href="#"class="nav-link">Meals</a>
                 </li>
                 <li class="nav-item">
-                    <a href="Cart.php"class="nav-link">Cart</a>
+                    <a href="Order.php"class="nav-link">Cart</a>
                 </li>
                 <li class="nav-item">
                     <a href="SelectRestaurant.php"class="nav-link">Booking</a>
