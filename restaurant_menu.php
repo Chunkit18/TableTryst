@@ -30,11 +30,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindValue(':price', $price, PDO::PARAM_STR);
         $stmt->bindValue(':image', $imagePath, PDO::PARAM_STR);
         $stmt->execute();
+
     } elseif (isset($_POST['delete'])) {
         $id = $_POST['delete_id'];
 
         // Delete menu item
-        $stmt = $conn->prepare('DELETE FROM "MenuItem" WHERE ID = :id');
+        $stmt = $conn->prepare('DELETE FROM "MenuItem" WHERE "ID" = :id');
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
     }
@@ -53,7 +54,7 @@ $result = $conn->query('SELECT "ID", "Name", "Price", "Image" FROM "MenuItem"');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Menu</title>
     <style>
-        .bg-color {
+        /*.bg-color {
             background: #0f0f0ffb;
             position: fixed;
             top: 0;
@@ -102,7 +103,7 @@ $result = $conn->query('SELECT "ID", "Name", "Price", "Image" FROM "MenuItem"');
             .navbar-nav {
                 text-align: center;
             }
-        }
+        } */
 
         .container {
             max-width: 900px;

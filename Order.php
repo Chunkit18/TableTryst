@@ -1,20 +1,22 @@
-<?php
-require 'connect.php';
+<div class="food-container">
+    <?php
+    require 'connect.php'; // Database connection
 
-$stmt = $pdo->query('SELECT "ID", "Name", "Price", "Image" FROM "MenuItem"');
-$menuItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt = $pdo->query('SELECT "ID", "Name", "Price", "Image" FROM "MenuItem"');
+    $menuItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-foreach ($menuItems as $item) {
-    echo '<div class="food-item">';
-    if (!empty($item['Image'])) {
-        echo '<img src="' . htmlspecialchars($item['Image']) . '" alt="Food Image">';
+    foreach ($menuItems as $item) {
+        echo '<div class="food-item">';
+        if (!empty($item['Image'])) {
+            echo '<img src="' . htmlspecialchars($item['Image']) . '" alt="Food Image">';
+        }
+        echo '<h3>' . htmlspecialchars($item['Name']) . '</h3>';
+        echo '<p>$' . number_format(htmlspecialchars($item['Price']), 2) . '</p>';
+        echo '<button class="add-to-cart" data-name="' . htmlspecialchars($item['Name']) . '" data-price="' . htmlspecialchars($item['Price']) . '">Add to Cart</button>';
+        echo '</div>';
     }
-    echo '<h3>' . htmlspecialchars($item['Name']) . '</h3>';
-    echo '<p>$' . htmlspecialchars($item['Price']) . '</p>';
-    echo '<button class="btn btn-primary add-to-cart" data-name="' . htmlspecialchars($item['Name']) . '" data-price="' . htmlspecialchars($item['Price']) . '">Add to Cart</button>';
-    echo '</div>';
-}
-?>
+    ?>
+</div>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -81,44 +83,68 @@ foreach ($menuItems as $item) {
 
         .food-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive Grid */
             gap: 20px;
-            padding: 20px;
+            padding: 40px 20px;
             max-width: 1200px;
-            margin: 100px auto 20px;
+            margin: 80px auto 0; /* Adjusted margin-top to push below navbar */
         }
 
         .food-item {
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
             text-align: center;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
         }
 
         .food-item:hover {
             transform: scale(1.05);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
         }
 
         .food-item img {
             width: 100%;
-            height: 180px;
+            height: 220px;
             object-fit: cover;
-            border-radius: 8px;
+            border-radius: 10px;
         }
 
         .food-item h3 {
-            margin-top: 10px;
-            color: #444;
-        }
-
-        .food-item p {
-            color: #777;
+            font-size: 20px;
+            margin-top: 15px;
+            color: #333;
             font-weight: bold;
         }
 
+        .food-item p {
+            font-size: 18px;
+            color: #ff7700;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .food-item .add-to-cart {
+            background: #ff7700;
+            color: white;
+            font-weight: bold;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .food-item .add-to-cart:hover {
+            background: #ff9900;
+        }
         .cart-sidebar {
             position: fixed;
             top: 70px; /* Positioned right below the navbar */
@@ -133,24 +159,24 @@ foreach ($menuItems as $item) {
             z-index: 999;
 }
 
-.cart-sidebar.open {
-    right: 0;
-}
+        .cart-sidebar.open {
+            right: 0;
+        }
 
-.cart-item {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-}
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
 
-#viewCartBtn {
-    display: block;
-    margin: 100px auto 20px; /* Adjusted margin to appear below navbar */
-    text-align: center;
-    width: 200px;
-}
+        #viewCartBtn {
+            display: block;
+            margin: 100px auto 20px; /* Adjusted margin to appear below navbar */
+            text-align: center;
+            width: 200px;
+        }
 
     </style>
 </head>
@@ -190,7 +216,8 @@ foreach ($menuItems as $item) {
     <button class="btn btn-danger" id="checkoutBtn">Checkout</button>
     <button class="btn btn-secondary" id="closeCartBtn">Close</button>
 </div>   
-<script>
+<<script>
+        document.addEventListener("DOMContentLoaded", function () {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
     function updateCartDisplay() {
@@ -201,11 +228,10 @@ foreach ($menuItems as $item) {
         cartItems.innerHTML = "";
         let total = 0;
         let itemCount = 0;
-        
+
         cart.forEach((item, index) => {
             total += item.price * item.quantity;
             itemCount += item.quantity;
-
             cartItems.innerHTML += `
                 <div class="cart-item">
                     <span>${item.name} (${item.quantity})</span>
@@ -221,33 +247,35 @@ foreach ($menuItems as $item) {
         localStorage.setItem("cart", JSON.stringify(cart));
     }
 
-    function changeQuantity(index, amount) {
+    window.changeQuantity = function (index, amount) {
         if (cart[index]) {
             cart[index].quantity += amount;
             if (cart[index].quantity <= 0) {
-                cart.splice(index, 1); // Remove item if quantity is zero
+                cart.splice(index, 1);
             }
+        }
+        updateCartDisplay();
+    };
+
+    function addToCart(name, price) {
+        let existingItem = cart.find(item => item.name === name);
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            cart.push({ name, price, quantity: 1 });
         }
         updateCartDisplay();
     }
 
-    // Add to Cart
-    document.querySelectorAll(".add-to-cart").forEach(button => {
-        button.addEventListener("click", function () {
-            let name = this.getAttribute("data-name");
-            let price = parseFloat(this.getAttribute("data-price"));
-
-            let existingItem = cart.find(item => item.name === name);
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({ name, price, quantity: 1 });
-            }
-
-            updateCartDisplay();
-            document.getElementById("cartSidebar").classList.add("open");
+    function attachAddToCartListeners() {
+        document.querySelectorAll(".add-to-cart").forEach(button => {
+            button.addEventListener("click", function () {
+                let name = this.getAttribute("data-name");
+                let price = parseFloat(this.getAttribute("data-price"));
+                addToCart(name, price);
+            });
         });
-    });
+    }
 
     document.getElementById("viewCartBtn").addEventListener("click", function () {
         document.getElementById("cartSidebar").classList.add("open");
@@ -259,46 +287,22 @@ foreach ($menuItems as $item) {
     });
 
     document.getElementById("checkoutBtn").addEventListener("click", function () {
-    window.location.href = "customer_form.php";
-});
-
-    updateCartDisplay();
-
-    ffunction fetchMenu() {
-    fetch('fetch_menu.php')
-        .then(response => response.text())
-        .then(data => {
-            document.querySelector(".food-container").innerHTML = data;
-            attachCartEventListeners(); // Ensure Add to Cart works on new items
-        })
-        .catch(error => console.error('Error fetching menu:', error));
-}
-
-// Function to reattach "Add to Cart" event listeners after updating menu
-function attachCartEventListeners() {
-    document.querySelectorAll(".add-to-cart").forEach(button => {
-        button.addEventListener("click", function () {
-            let name = this.getAttribute("data-name");
-            let price = parseFloat(this.getAttribute("data-price"));
-
-            let existingItem = cart.find(item => item.name === name);
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({ name, price, quantity: 1 });
-            }
-
-            updateCartDisplay();
-            document.getElementById("cartSidebar").classList.add("open");
-        });
+        window.location.href = "customer_form.php";
     });
-}
 
-// Auto-refresh menu every 5 seconds
-setInterval(fetchMenu, 5000);
+    function fetchMenu() {
+        fetch("menu.php")
+            .then(response => response.text())
+            .then(data => {
+                document.querySelector(".food-container").innerHTML = data;
+                attachAddToCartListeners();
+            })
+            .catch(error => console.error("Error fetching menu:", error));
+    }
 
-// Fetch the menu when the page loads
-fetchMenu();
+    attachAddToCartListeners();
+    updateCartDisplay();
+});
 
 </script>
 </body>
