@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabletryst</title>
+    <link rel="stylesheet" href="booking.css">
+</head>
+<body>
+    <header id="page-header">
+        <nav class="top-nav">
+            <div class="container">
+                <h1 class="logo">
+                    <a href="/">TableTryst</a>
+                </h1>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="datatable" class="table">
+            <header class="sub-head">
+                <div class="container">
+                    <h1>Bookings</h1>
+                    </div>
+                    <nav class="table-header">
+                        <ul class="table-sorter">
+                            <li class="th sort" data-sort="id">ID <span class="spinner"></span></li>
+                            <li class="th sort" data-sort="alt-id">Name <span class="spinner"></span></li>
+                            <li class="th sort" data-sort="amounts">Location <span class="spinner"></span></li>
+                            <li class="th sort" data-sort="created-date">Number of Guests <span class="spinner"></span></li>
+                            <li class="th sort" data-sort="due-date">Date Time <span class="spinner"></span></li>
+                            <li class="th sort" data-sort="status">Status <span class="spinner"></span></li>
+                            <li class="th sort">Requests</li>
+                            <li class="th sort">Orders</li>
+                        </ul>
+                    </nav>
+                </div>
+            </header>
+            <section class="table-body">
+                <div class="container">
+                    <ul class="list">
+                        <!-- Sample Row (Repeat for multiple entries) -->
+                        <li class="tr">
+                            <div class="td id">827301</div>
+                            <div class="td alt-id">KFC</div>
+                            <div class="td amounts">Sunway Pyramid</div>
+                            <div class="td created-date">2</div>
+                            <div class="td due-date">12/15/2025 1300</div>
+                            <div class="td status">Pending</div>
+                            <div class="td requests">
+                                <button class="link">View Request</button>
+                            </div>
+                            <div class="td records">
+                                <input class="border-btn" type="button" value="View Items">
+                            </div>
+                        </li>
+                        <!-- Add more rows as needed -->
+                    </ul>
+                </div>
+            </section>
+            <footer class="table-footer">
+                <nav class="container">
+                    <p>Showing <span id="page-first-item-number">1</span> - <span id="page-last-item-number">5</span> of <span id="record-count-total">40</span></p>
+                    <div class="pagination">
+                        <button class="prev">&lt;</button>
+                        <ul class="pager"></ul>
+                        <button class="next">&gt;</button>
+                    </div>
+                    <input class="primary-btn" type="button" value="Action Button">
+                </nav>
+            </footer>
+        </section>
+    </main>
+</body>
+</html>
